@@ -1,0 +1,26 @@
+.card-button {
+    border-radius: 10%;
+    transition: background-color 1s;
+}
+
+.card-button:hover {
+    text-decoration: none;
+}
+.card {
+    box-shadow: 10px 10px 5px grey;
+}
+
+#update-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#update-enclosure {
+    text-align: center;
+    box-shadow: 10px 10px 5px grey;
+}
+
+#delete-enclosure {
+    text-align: center;
+    box-shadow: 10px 10px 5px grey;
+}
