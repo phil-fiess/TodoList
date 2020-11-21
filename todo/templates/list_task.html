@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!--Data picker in JS-->
+<script>
+$(document).ready(function() {
+	var date_input = $('input[name="date"]'); //date input has name = date
+	var container = $('.bootstrap-iso-form').length > 0 ? $('.bootstrap-iso-form').parent() : "body";
+	date_input.datepicker({
+		format: 'yy-mm-dd', 
+		container: container,
+		todayHighlight: true,
+		autoclose: true,
+	})
+})
+</script>
+
+<div class="container">
+	<div class="text-center mb-5">
+		<form method="POST" action="/">
+			{% csrf_token %}
+			{{form}}
+			<br>
+			<input class="btn btn-dark" style="margin: 10px; " type="submit" name="save" value="+ Add Task">
+		</form>
+	</div>
+	<div class="todo-list">
+	{% for task in tasks %}
+		<div class="card-columns">
+			
+			{% if task.completed %}
+				<div class="card text-dark bg-light m-3">
+            	    <div class="card-header">
+            	        COMPLETED
+                        <a class="btn-light float-right card-button" style="border: none; padding: 3px 5px 3px 5px;" href="{% url 'delete_task' task.id %}">X</a>
+                        <a class="btn-light float-right card-button" style="border: none; margin-right: 15px; padding: 3px 5px 3px 5px;" href="{% url 'update_task' task.id %}">Update</a>
+            	    </div>
+            	    <div class="card-body">
+            	        <h5 class="card-title">Task</h5>
+            	        <p>{{ task.title }}</p>
+            	        <h5 class="card-title">Due</h5>
+            	        <p>{{ task.due }}</p>
+            	    </div>
+            	    <div class="card-footer">
+            	        Created on {{ task.date_created }}
+            	    </div>
+            	</div>
+			{% else %}
+                <div class="card text-white bg-success m-3">
+                    <div class="card-header">
+                            ACTIVE
+                            <a class="btn-success float-right card-button" style="border: none;" href="{% url 'delete_task' task.id %}">X</a>
+                            <a class="btn-success float-right card-button" style="border: none; margin-right: 20px; padding: 3px;" href="{% url 'update_task' task.id %}">Update</a>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Task</h5>
+                        <p>{{ task.title }}</p>
+            	        <h5 class="card-title">Due</h5>
+            	        <p>{{ task.due }}</p>
+                        <p>Complete in: {{ task.due|timeuntil }}</p>
+                    </div>
+                    <div class="card-footer">
+                        Created on {{ task.date_created }}
+                    </div>
+                </div>
+			{% endif %}
+		</div>
+	{% endfor %}
+	</div>
+</div>
+{% endblock %}

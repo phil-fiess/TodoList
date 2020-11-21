@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div class="alert alert-danger" id="delete-enclosure" role="alert">
+    <h1 id="delete-header">Delete Task</h1>
+    <h4 id="delete-description">Deleting <span style="color: red;">{{item}}</span> is permanent. Do you wish to proceed?</h4>
+    <br><br>
+    <form method="POST" action="" style="padding: 5px;">{% csrf_token %}
+        {{form}}
+        <input class="btn btn-sm btn-danger" type="submit" value="Delete Task" name="Delete">
+        <a class="btn btn-sm btn-primary" href="{% url 'task_list' %}">Back to List</a>
+    </form>    
+</div>
+{% endblock %}
